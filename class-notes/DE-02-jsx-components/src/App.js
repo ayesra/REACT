@@ -1,3 +1,4 @@
+import Footer from "./footer/Footer";
 import Msg from "./msg/Msg";
 
 
@@ -6,6 +7,7 @@ function App() {
     <div>
 
       <Msg />
+      <Footer/>
 
     </div>
   );
