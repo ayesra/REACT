@@ -14,7 +14,10 @@ const Form = () => {
 
   const formAlindi = () => {
 
-    alert(`name:${isim} password:${pass} country:${ülke}`)
+    alert(`
+    name:${isim} 
+    password:${pass} 
+    country:${ülke}`)
   }
 
   return (
