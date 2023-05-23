@@ -24,53 +24,67 @@
 // //*     //* componentWillUnmount code */
 // //!   };
 // //! }, [var1, var2]);
-
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const OrnekUseEffect = () => {
     const [sayac, setSayac] = useState(0)
 
-    // //? ilk bunu göster:
-    // //!componentDisMount= component ilk render edildiginde calis
+    //?ilk bunu göster
+
+    //!componentDidMount= component ilk render edildiğinde çalış
 
     // useEffect(()=>{
-    //     console.log("ilk render");
-    //     setTimeout(()=>{
-    //         alert("veri getirildi")
-    //     },3000)
+
+    // console.log("ilk render");
+    // setTimeout(()=>{
+    //     alert("veri getirildi")
+    // },3000)
+
+
     // },[])
 
-    //? ikinci olarak bunu göster:
-    //! count her degistiginde calissin= componentDipUpdate
+    //? ikinci olarak bunu göster
+
+    //! count her değiştiğinde çalışsın= componentDidUpdate
 
     // useEffect(()=>{
-    //     console.log("sayac artiyor");
-    //     setTimeout(()=>{
-    //         alert("veri getirildi")
-    //     },3000)
+    //   console.log("sayac artıyor");
+
+    //   setTimeout(()=>{
+    //       alert("veri getirildi")
+    //   },3000)
+
     // },[sayac])
 
-    //?son olarak bunu göster:
-    //!component öldügünde (baska sayfaya gidildiginde)
+    //?son olarak bunu göster
+    //!component öldüğünde (başka sayfaya gidildiğinde )
 
-    useEffect(()=>{
-       const time= setInterval(()=>{
-            console.log("INTERVAL CALISMAYA BASLADI");
-        },1000)
+    useEffect(() => {
+
+        const time = setInterval(() => {
+            console.log("INTERVAL ÇALIŞMAYA BAŞLADI");
+        }, 1000)
+
 
         //!component ölünce=componentWillUnmount
-        return ()=> {
-            clearInterval()
+        return () => {
+
+            clearInterval(time)
             console.log("component öldü");
         }
-    },[])
+
+    }, [])
+
+
+
+
 
 
     return (
         <div>
             <h3>COUNT:{sayac}</h3>
 
-            <button className='btn btn-warning' onClick={() => setSayac(sayac + 1)}>ARTTIR</button>
+            <button className="btn btn-warning" onClick={() => setSayac(sayac + 1)}>ARTTIR</button>
         </div>
     )
 }
