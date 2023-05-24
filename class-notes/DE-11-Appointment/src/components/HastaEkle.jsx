@@ -1,23 +1,32 @@
 import { useState } from "react";
 
-const HastaEkle = ({ hastalar, setHastalar }) => {
-
-  const [isim, setIsim] = useState("")
-  const [tarih, setTarih] = useState("")
+const HastaEkle = ({ hastalar, setHastalar, doktorlar }) => {
+  const [isim, setIsim] = useState("");
+  const [tarih, setTarih] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault(); //!dirrek submit yapmadan önce alttaki kodlari gör*
-    setHastalar([...hastalar,{ 
-      id: hastalar.length+1, 
-      text: isim, 
-      day: tarih, 
-      bittiMi: false, 
-      doktorum: "esra" }])
-  }
+    e.preventDefault(); //direk submit yapmadan önce alttaki kodları gör
+
+    setHastalar([
+      ...hastalar,
+      {
+        id: hastalar.length + 1,
+        text: isim,
+        day: tarih,
+        bittiMi: false,
+        doktorum: doktorlar[0].doktor,
+      },
+    ]);
+    // submit sonrası inputlardan value temizlemek için, hem alttaki işlemler yapılır, hemde inputlarda value={isim} yazarak browser da boşluksa boşluk isimse isim gözükmesi sağlanır
+    setIsim("")
+    setTarih("")
+    console.log(hastalar);
+
+  };
 
   return (
     <div>
-      <form onSubmit={handleSubmit} >
+      <form onSubmit={handleSubmit}>
         <div className="form-control">
           <label htmlFor="text">Hasta Bilgileri</label>
 
@@ -26,7 +35,7 @@ const HastaEkle = ({ hastalar, setHastalar }) => {
             type="text"
             placeholder="Add Name"
             name="text"
-
+            value={isim}
             onChange={(e) => setIsim(e.target.value)}
           />
         </div>
@@ -38,14 +47,14 @@ const HastaEkle = ({ hastalar, setHastalar }) => {
             id="day"
             type="datetime-local"
             name="day"
+            value={tarih}
             onChange={(e) => setTarih(e.target.value)}
           />
         </div>
 
         <div>
           <button className=" dok btn btn-submit" type="submit">
-            <span style={{ color: "#6a0707" }}></span> Icin
-            Kayit Oluştur
+            <span style={{ color: "#6a0707" }}>{doktorlar[0].doktor}</span> İçin Kayıt Oluştur
           </button>
         </div>
       </form>
