@@ -5,10 +5,11 @@ const HastaListe = ({ hastalar, setHastalar }) => {
   return (
     <div>
       {hastalar.map((hasta) => {
-
         return (
-          <div>
-            <div className={hasta.bittiMi? "trueBittiStil":"falseBitmediStil"}>
+          <div key={hasta.id}>
+            <div className={hasta.bittiMi? "trueBittiStil":"falseBitmediStil"} 
+            onDoubleClick={()=>setHastalar(hastalar.map((a)=>a.id===hasta.id ? {...a,bittiMi:!a.bittiMi} : a))}>
+
               <div>
                 <h2>{hasta.text}</h2>
                 <h4>{hasta.day}</h4>
@@ -20,10 +21,6 @@ const HastaListe = ({ hastalar, setHastalar }) => {
         )
 
       })}
-
-
     </div>
   )
 }
-
-export default HastaListe
