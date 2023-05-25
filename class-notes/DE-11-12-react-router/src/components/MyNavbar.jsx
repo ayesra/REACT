@@ -2,6 +2,7 @@
 
 import { Navbar, Container, Nav } from "react-bootstrap";
 import logo from "../img/logo.png";
+import { Link, NavLink } from "react-router-dom";
 
 //!react-bootstrap MyNavbar component
 
@@ -9,10 +10,10 @@ const MyNavbar = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="#">
-          {" "}
-          <img alt="" />
-        </Navbar.Brand>
+        <Link to="/">
+
+          <img alt="" src={logo} />
+        </Link>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -20,16 +21,24 @@ const MyNavbar = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <NavLink className="nav-link" to="/"
+              style={({ isActive }) => ({ color: isActive && "red" })}
+            >Home</NavLink>
 
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <NavLink className="nav-link" to="/teacher"
+              style={({ isActive }) => ({ backgroundColor: isActive && "red" })}
+            >Teacher</NavLink>
 
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <NavLink className="nav-link" to="/courses"
+              style={({ isActive }) => ({ fontSize: isActive && "50px" })}
+            >Courses</NavLink>
 
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <NavLink className="nav-link" to="/contact"
+              style={({ isActive }) => ({ border: isActive ? "2px solid red" : "1px solid blue" })}
+            >Contact</NavLink>
 
             <a
-              href="https://github.com/clarusway/clarusway-FS-DE-04-TR"
+              href="https://github.com/clarusway/clarusway-FS-DE-05-TR"
               className="nav-link"
               target="_blank"
               rel="noreferrer"
