@@ -6,5 +6,3 @@ const RecipeCard = () => {
     <div>recipecard</div>
   );
 }
-
-export default RecipeCard

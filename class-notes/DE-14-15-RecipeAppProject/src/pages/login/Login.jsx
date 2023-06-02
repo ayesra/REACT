@@ -46,5 +46,3 @@ const Login = () => {
     </LoginContainer>
   )
 }
-
-export default Login
