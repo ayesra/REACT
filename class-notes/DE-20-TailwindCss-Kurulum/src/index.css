@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*yapistirdigimiz @tailwind base; @tailwind components; @tailwind utilities; Kodlari Tailwind icerisindeki base component ve utilities classlarini kullanabilecegimizi gösteriyor*/
+
+/**element bazinda default olarak vermek istedigimiz stilleri base layer'da veriyoruz**/
+@layer base{
+    a{
+        text-decoration: none;
+        color: black;
+    }
+    h1{
+        font-size: 2rem;
+    }
+}
+
+/** component/class bazinda default olarak vermek istedigimiz stilleri component layer'da veriyoruz **/
+@layer components{
+    .main{
+        @apply bg-fuchsia-400 min-h-screen flex justify-center items-center gap-3;
+    }
+    .card{
+        @apply flex flex-col justify-between items-center bg-slate-500 rounded-xl w-3/12 p-4;
+    }
+}
