@@ -2,37 +2,18 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import LockIcon from "@mui/icons-material/Lock";
+import { Formik } from "formik";
 import image from "../assets/result.svg";
 import Grid from "@mui/material/Grid";
+import RegisterForm, { registerSchema } from "../components/RegisterForm";
 import { Link } from "react-router-dom";
-import { Box, TextField } from "@mui/material";
-import { Form, Formik } from "formik";
+import { Box } from "@mui/material";
 
-
-import * as Yup from "yup";
-
-const SignupSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(4, "Too Short!")
-    .max(150, "Too Long!")
-    .required("username required"),
-  first_name: Yup.string().max(100, "Too Long!").required("Required"),
-  last_name: Yup.string().max(100, "Too Long!").required("Required"),
-  email: Yup.string().email("Invalid email").required("Email required"),
-  password: Yup.string()
-    .min(8, "En az 8 karakter uzunluğunda olması lazım")
-    .max(50, "Too Long!")
-    .matches(/\d+/, "Password bir sayı içermelidir")
-    .matches(/[a-z]/, "Password bir küçük harf içermelidir")
-    .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
-    .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir") //regex
-    .required("Required"),
-  password2: Yup.string()
-    .oneOf([Yup.ref("password")], "Password aynı olmak zorundadır!")
-    .required("Required"),
-});
+import useAuthCall from "../hooks/useAuthCall";
 
 const Register = () => {
+  const { register } = useAuthCall();
+
   return (
     <Container maxWidth="lg">
       <Grid
@@ -67,6 +48,7 @@ const Register = () => {
             color="secondary.light">
             Register
           </Typography>
+
           <Formik
             initialValues={{
               username: "",
@@ -74,103 +56,15 @@ const Register = () => {
               last_name: "",
               email: "",
               password: "",
-              password2: "",
+              password2:"",
             }}
-            validationSchema={SignupSchema}
+            validationSchema={registerSchema}
             onSubmit={(values, actions) => {
-              //! submit işlemi gerçekleştiğinde yapmasını istediğimiz işlemleri buraya yazıyoruz.
-
-              console.log(values);
+              register(values);
               actions.resetForm();
-            }}>
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-            }) => (
-              <Form>
-                <Box>
-                  <TextField
-                    id="username"
-                    label="User Name"
-                    type="text"
-                    variant="outlined"
-                    name="username"
-                    value={values.username}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.username && errors.username} //validationda verdiğimiz kalıba uymazsa ilgili mesajları göstermesi için
-                    error={touched.username && errors.username} //validationda verdiğimiz kalıba uymazsa rengi errora çevirmesi için
-                  />
-                  {/* mui textfield kullanmadığımzda <span>{touched.username && errors.username}</span> */}
-                  <TextField
-                    id="first_name"
-                    label="First Name"
-                    type="text"
-                    variant="outlined"
-                    name="first_name"
-                    value={values.first_name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.first_name && errors.first_name} //validationda verdiğimiz kalıba uymazsa ilgili mesajları göstermesi için
-                    error={touched.first_name && errors.first_name} //validationda verdiğimiz kalıba uymazsa rengi errora çevirmesi için
-                  />
-                  <TextField
-                    id="last_name"
-                    label="Last Name"
-                    type="text"
-                    variant="outlined"
-                    name="last_name"
-                    value={values.last_name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.last_name && errors.last_name} //validationda verdiğimiz kalıba uymazsa ilgili mesajları göstermesi için
-                    error={touched.last_name && errors.last_name} //validationda verdiğimiz kalıba uymazsa rengi errora çevirmesi için
-                  />
-                  <TextField
-                    id="email"
-                    label="Email"
-                    type="email"
-                    variant="outlined"
-                    name="email"
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.email && errors.email} //validationda verdiğimiz kalıba uymazsa ilgili mesajları göstermesi için
-                    error={touched.email && errors.email} //validationda verdiğimiz kalıba uymazsa rengi errora çevirmesi için
-                  />
-                  <TextField
-                    id="password"
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.password && errors.password} //validationda verdiğimiz kalıba uymazsa ilgili mesajları göstermesi için
-                    error={touched.password && errors.password} //validationda verdiğimiz kalıba uymazsa rengi errora çevirmesi için
-                  />
-                  <TextField
-                    id="password2"
-                    label="Confirm Password"
-                    type="password"
-                    variant="outlined"
-                    name="password2"
-                    value={values.password2}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.password2 && errors.password2} //validationda verdiğimiz kalıba uymazsa ilgili mesajları göstermesi için
-                    error={touched.password2 && errors.password2} //validationda verdiğimiz kalıba uymazsa rengi errora çevirmesi için
-                  />
-                </Box>
-              </Form>
-            )}
-          </Formik>
-
+            }}
+            component={props => <RegisterForm {...props} />}>
+            </Formik>
           <Box sx={{ textAlign: "center", mt: 2 }}>
             <Link to="/">Do you have an account?</Link>
           </Box>
